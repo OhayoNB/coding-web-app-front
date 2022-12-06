@@ -1,0 +1,10 @@
+.app-footer {
+  height: 100px;
+  background-color: #e1e0e0;
+  text-align: center;
+  @include flexAlign(center, center, column);
+
+  .logo {
+    margin-bottom: 10px;
+  }
+}

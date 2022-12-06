@@ -1,0 +1,26 @@
+.app-header {
+  font-family: 'Dosis-Bold';
+  font-size: em(20px);
+  background-color: $sky-primary;
+  color: white;
+
+  .navbar {
+    display: flex;
+    gap: 15px;
+
+    a {
+      height: 60px;
+      transition: color 0.2s;
+      width: 60px;
+      @include flexAlign(center, center);
+
+      &:hover {
+        opacity: 0.85;
+      }
+
+      &.active {
+        box-shadow: inset 0px -8px 0 0 #1d1d1dbe;
+      }
+    }
+  }
+}
