@@ -1,5 +1,6 @@
 import React from 'react'
 import { Route, Routes } from 'react-router-dom'
+import { Lobby } from 'views/Lobby'
 import './assets/styles/main.scss'
 import { AppFooter } from './components/AppFooter'
 import { AppHeader } from './components/AppHeader'
@@ -12,6 +13,7 @@ function App() {
       <main className="main-container">
         <Routes>
           <Route path="" element={<Login />} />
+          <Route path="lobby" element={<Lobby />} />
         </Routes>
       </main>
       <AppFooter />
