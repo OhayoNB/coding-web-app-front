@@ -1,6 +1,8 @@
 import { CodeblockList } from 'components/CodeblockList'
+import { UsersModal } from 'components/UsersModal'
 import { User } from 'models/User'
 import { useEffect, useState } from 'react'
+import { Route, Routes } from 'react-router-dom'
 import { codeblockService } from 'services/codeblock.service'
 import { userService } from 'services/user.service'
 
@@ -29,6 +31,9 @@ export const Lobby = () => {
       {loggedInUser && <h1>Hello, {loggedInUser.username}</h1>}
       <h1>Choose code block to start</h1>
       <CodeblockList codeblocks={codeblocks} />
+      <Routes>
+        <Route path=":codeblockId" element={<UsersModal />} />
+      </Routes>
     </section>
   )
 }

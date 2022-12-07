@@ -7,10 +7,10 @@ interface Props {
 
 export const CodeblockList: React.FC<Props> = ({ codeblocks }) => {
   return (
-    <section className="codeblock-list">
-      {codeblocks.map((codeblock: Codeblock) => (
-        <CodeblockPreview key={codeblock.id} codeblock={codeblock} />
-      ))}
-    </section>
+    <ul className="codeblock-list">
+      {codeblocks.map((codeblock: Codeblock) => {
+        return <CodeblockPreview key={codeblock._id} codeblock={codeblock} />
+      })}
+    </ul>
   )
 }

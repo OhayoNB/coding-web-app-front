@@ -9,44 +9,8 @@ export const codeblockService = {
   remove,
 }
 
-let gCodeblocks = [
-  {
-    id: 1,
-    title: 'Async case',
-    code: `async function asyncCall() {
-      console.log('calling');
-      const result = await resolveAfter2Seconds();
-      console.log(result);
-      // expected output: "resolved"
-    }`,
-  },
-  {
-    id: 2,
-    title: 'Array map method',
-    code: `const strings = ["10", "10", "10"];
-    const numbers = strings.map(parseInt);
-    
-    console.log(numbers);`,
-  },
-  {
-    id: 3,
-    title: 'Reverse string',
-    code: `const reverseString = string => [...string].reverse().join('');`,
-  },
-  {
-    id: 4,
-    title: 'For loop',
-    code: `const n = 5;
-    
-    for (let i = 1; i <= n; i++) {
-        console.log('I love JavaScript.');
-    }`,
-  },
-]
-
 async function query() {
   try {
-    return gCodeblocks
     return httpService.get(BASE_URL)
   } catch (err) {
     console.log('Cannot get entities', err)

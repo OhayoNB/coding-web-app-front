@@ -1,5 +1,5 @@
 export interface Codeblock {
-  id: number
+  _id: number
   title: string
   code: string
 }

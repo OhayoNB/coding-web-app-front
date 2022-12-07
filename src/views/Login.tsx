@@ -1,21 +1,18 @@
 import { useFormik } from 'formik'
 import React, { useEffect, useState } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { userService } from 'services/user.service'
 import * as Yup from 'yup'
 
 export const Login = () => {
-  const params = useParams()
   const navigate = useNavigate()
-  const [status, setStatus] = useState(params.status)
   const [wrongCredentialsDiv, setWrongCredentialsDiv] = useState<
     String | undefined
   >()
 
   useEffect(() => {
-    setStatus(params.status)
     setWrongCredentialsDiv('not-visible')
-  }, [params.status])
+  }, [])
 
   const formik = useFormik({
     initialValues: {

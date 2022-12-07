@@ -1,0 +1,15 @@
+.users-modal {
+  width: 450px;
+  height: 40%;
+  position: fixed;
+  inset: 0;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px;
+  background-color: $sky-primary;
+  border-radius: 25px;
+  box-shadow: 0 0 45px 8px $sky-primary;
+  border: 1px solid white;
+}

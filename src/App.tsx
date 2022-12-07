@@ -14,7 +14,7 @@ function App() {
       <main className="main-container">
         <Routes>
           <Route path="" element={<Login />} />
-          <Route path="lobby" element={<Lobby />} />
+          <Route path="lobby/*" element={<Lobby />} />
           <Route path="codeblock" element={<Codeblock />} />
         </Routes>
       </main>
