@@ -15,7 +15,7 @@ async function query() {
   }
 }
 
-async function getById(codeblockId: string) {
+async function getById(codeblockId: string | undefined) {
   try {
     return httpService.get(BASE_URL + codeblockId)
   } catch (err) {

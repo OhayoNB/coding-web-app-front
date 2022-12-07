@@ -1,6 +1,6 @@
 import React from 'react'
 import { Route, Routes } from 'react-router-dom'
-import { Codeblock } from 'views/Codeblock'
+import { CodeblockPage } from 'views/CodeblockPage'
 import { Lobby } from 'views/Lobby'
 import './assets/styles/main.scss'
 import { AppFooter } from './components/AppFooter'
@@ -15,7 +15,10 @@ function App() {
         <Routes>
           <Route path="" element={<Login />} />
           <Route path="lobby/*" element={<Lobby />} />
-          <Route path="codeblock/:uuid/:codeblockId" element={<Codeblock />} />
+          <Route
+            path="codeblock/:uuid/:codeblockId"
+            element={<CodeblockPage />}
+          />
         </Routes>
       </main>
       <AppFooter />
