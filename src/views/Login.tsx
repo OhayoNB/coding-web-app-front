@@ -1,17 +1,20 @@
 import { useFormik } from 'formik'
 import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
+import { userService } from 'services/user.service'
 import * as Yup from 'yup'
 
 export const Login = () => {
   const params = useParams()
   const navigate = useNavigate()
   const [status, setStatus] = useState(params.status)
-  const [wrongCredentialsDiv, setWrongCredentialsDiv] = useState()
+  const [wrongCredentialsDiv, setWrongCredentialsDiv] = useState<
+    String | undefined
+  >()
 
   useEffect(() => {
     setStatus(params.status)
-    // setWrongCredentialsDiv('not-visible')
+    setWrongCredentialsDiv('not-visible')
   }, [params.status])
 
   const formik = useFormik({
@@ -26,14 +29,14 @@ export const Login = () => {
         .min(5, 'Password is too short - should be 5 chars minimum.')
         .matches(/[a-zA-Z]/, 'Password can only contain Latin letters.'),
     }),
-    onSubmit: () => {
+    onSubmit: (values) => {
       ;(async () => {
         try {
-          // await dispatch(login(values))
-          navigate('/workspace')
+          await userService.login(values)
+          navigate('/lobby')
         } catch (err) {
           console.log(err, 'cannot login')
-          // setWrongCredentialsDiv('')
+          setWrongCredentialsDiv('')
         }
       })()
     },
@@ -47,9 +50,9 @@ export const Login = () => {
     <section className="form-container">
       <form className="signup-form" onSubmit={formik.handleSubmit}>
         <h5>Log in to enter the lobby</h5>
-        {/* <div className={`wrong-credentials ${wrongCredentialsDiv}`}>
+        <div className={`wrong-credentials ${wrongCredentialsDiv}`}>
           Incorrect email address and / or password.
-        </div> */}
+        </div>
         <input
           id="username"
           name="username"

@@ -19,7 +19,10 @@ export const Codeblock = () => {
     <section className="codeblock">
       <h1>Codeblock page</h1>
 
-      <div dangerouslySetInnerHTML={{ __html: marked(markdown) }}></div>
+      <div
+        contentEditable="true"
+        dangerouslySetInnerHTML={{ __html: marked(markdown) }}
+      ></div>
     </section>
   )
 }

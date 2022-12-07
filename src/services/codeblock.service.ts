@@ -44,7 +44,6 @@ let gCodeblocks = [
   },
 ]
 
-// TODO: check if filterBy can be removed
 async function query() {
   try {
     return gCodeblocks
