@@ -8,7 +8,6 @@ export const UsersModal = () => {
     ;(async () => {
       try {
         const users = await userService.getUsers()
-        console.log(`users:`, users)
         setUsers(users)
       } catch (err) {
         console.log(err, 'cannot get codeblocks')

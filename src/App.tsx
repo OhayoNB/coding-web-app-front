@@ -15,7 +15,7 @@ function App() {
         <Routes>
           <Route path="" element={<Login />} />
           <Route path="lobby/*" element={<Lobby />} />
-          <Route path="codeblock" element={<Codeblock />} />
+          <Route path="codeblock/:uuid/:codeblockId" element={<Codeblock />} />
         </Routes>
       </main>
       <AppFooter />
