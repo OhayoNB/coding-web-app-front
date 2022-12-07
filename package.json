@@ -12,6 +12,8 @@
     "@types/react-dom": "^18.0.0",
     "axios": "^1.1.3",
     "formik": "^2.2.9",
+    "highlight.js": "^11.7.0",
+    "marked": "^4.2.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.4.2",
@@ -44,5 +46,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@types/marked": "^4.0.7"
   }
 }

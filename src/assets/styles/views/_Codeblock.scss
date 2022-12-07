@@ -1,8 +1,7 @@
-.lobby {
+.codeblock {
   @include flexAlign(center, center, column);
-  margin: 2em;
 
   h1 {
-    margin-block-end: 1rem;
+    margin: 1rem auto;
   }
 }
