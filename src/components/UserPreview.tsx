@@ -29,9 +29,7 @@ export const UserPreview: React.FC<Props> = ({ user }) => {
         'A link to the user has been copied to clipboard, you are being redirected to the codeblock page',
         'success'
       )
-      navigate(
-        `/codeblock/${uuid}/${params.codeblockId}?student_login=${user.username}`
-      )
+      navigate(`/codeblock/${uuid}/${params.codeblockId}`)
     } catch (err) {
       console.log('Cannot add session:', err)
     }

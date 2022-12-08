@@ -1,6 +1,6 @@
 import { useFormik } from 'formik'
 import React, { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import { userService } from 'services/user.service'
 import * as Yup from 'yup'
 
@@ -9,6 +9,7 @@ export const Login = () => {
   const [wrongCredentialsDiv, setWrongCredentialsDiv] = useState<
     String | undefined
   >()
+  const [searchParams, setSearchParams] = useSearchParams()
 
   useEffect(() => {
     setWrongCredentialsDiv('not-visible')
@@ -29,8 +30,12 @@ export const Login = () => {
     onSubmit: (values) => {
       ;(async () => {
         try {
-          await userService.login(values)
-          navigate('/lobby')
+          const user = await userService.login(values)
+          if (user.isMentor) navigate('/lobby')
+          else {
+            const studentUsername = searchParams.get('student_login')
+            if (user.username === studentUsername) navigate(-1)
+          }
         } catch (err) {
           console.log(err, 'cannot login')
           setWrongCredentialsDiv('')
