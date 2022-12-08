@@ -2,6 +2,7 @@ import { useFormik } from 'formik'
 import React, { useEffect, useState } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import { userService } from 'services/user.service'
+import Swal from 'sweetalert2'
 import * as Yup from 'yup'
 
 export const Login = () => {
@@ -35,6 +36,12 @@ export const Login = () => {
           else {
             const studentUsername = searchParams.get('student_login')
             if (user.username === studentUsername) navigate(-1)
+            else
+              Swal.fire(
+                'You are not a mentor!',
+                'Try to login as a mentor to enter the lobby',
+                'error'
+              )
           }
         } catch (err) {
           console.log(err, 'cannot login')
