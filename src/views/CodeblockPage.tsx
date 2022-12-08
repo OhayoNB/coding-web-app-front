@@ -1,6 +1,3 @@
-import 'highlight.js/styles/github.css'
-import { marked } from 'marked'
-import hljs from 'highlight.js'
 import { useCallback, useEffect, useState } from 'react'
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
 import { codeblockService } from 'services/codeblock.service'
@@ -18,18 +15,26 @@ export const CodeblockPage = () => {
   const [searchParams] = useSearchParams()
   const loggedInUser = userService.getLoggedInUser()
 
-  const updateCodeblock = async () => {
-    console.log('abc')
+  const socketUpdateCodeblock = useCallback((updatedCodeblock: Codeblock) => {
+    setCodeblock(updatedCodeblock)
+  }, [])
+
+  useEffect(() => {
+    if (params.codeblockId)
+      socketService.emit('join-codeblock', params.codeblockId)
+  }, [params.codeblockId])
+
+  useEffect(() => {
+    socketService.on('update-codeblock', socketUpdateCodeblock)
+  }, [socketUpdateCodeblock])
+
+  const updateCodeblock = useCallback(async (codeblock: Codeblock) => {
     try {
-      if (codeblock) await codeblockService.update(codeblock)
+      await codeblockService.update(codeblock)
     } catch (err) {
       console.log('update codeblock failed', err)
     }
-  }
-
-  useEffect(() => {
-    updateCodeblock()
-  }, [codeblock, updateCodeblock])
+  }, [])
 
   useEffect(() => {
     ;(async () => {
@@ -65,7 +70,8 @@ export const CodeblockPage = () => {
     }
   }, [navigate, searchParams, loggedInUser])
 
-  const handleChange = useCallback((value: string) => {
+  const handleChange = (value: string) => {
+    const updatedCodeBlock: any = { ...codeblock, code: value }
     setCodeblock(
       (prevCodeblock) =>
         ({
@@ -73,7 +79,8 @@ export const CodeblockPage = () => {
           code: value,
         } as Codeblock)
     )
-  }, [])
+    updateCodeblock(updatedCodeBlock)
+  }
 
   return (
     <section className="codeblock">
@@ -81,7 +88,7 @@ export const CodeblockPage = () => {
 
       {codeblock && (
         <CodeMirror
-          editable={loggedInUser.isMentor}
+          editable={!loggedInUser.isMentor}
           value={codeblock.code}
           height="300px"
           width="700px"

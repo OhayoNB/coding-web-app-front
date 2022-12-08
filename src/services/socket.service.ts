@@ -1,3 +1,4 @@
+import { Codeblock } from 'models/Codeblock'
 import io, { Socket } from 'socket.io-client'
 import { userService } from './user.service'
 
@@ -19,7 +20,7 @@ function createSocketService() {
         if (user) this.login(user._id)
       }, 500)
     },
-    on(eventName: string, cb: () => void) {
+    on(eventName: string, cb: (codeblock: Codeblock) => void) {
       socket.on(eventName, cb)
     },
     emit(eventName: string, data: string) {
