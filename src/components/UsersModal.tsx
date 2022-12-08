@@ -1,3 +1,4 @@
+import { User } from 'models/User'
 import { useEffect, useState } from 'react'
 import { userService } from 'services/user.service'
 import { UserList } from './UserList'
@@ -7,7 +8,8 @@ export const UsersModal = () => {
   useEffect(() => {
     ;(async () => {
       try {
-        const users = await userService.getUsers()
+        let users = await userService.getUsers()
+        users = users.filter((user: User) => !user.isMentor)
         setUsers(users)
       } catch (err) {
         console.log(err, 'cannot get codeblocks')

@@ -2,6 +2,7 @@ import { User } from 'models/User'
 import { useNavigate, useParams } from 'react-router-dom'
 import { sessionService } from 'services/session.service'
 import { v4 as uuidv4 } from 'uuid'
+import Swal from 'sweetalert2'
 
 interface Props {
   user: User
@@ -20,8 +21,13 @@ export const UserPreview: React.FC<Props> = ({ user }) => {
     }
     try {
       await sessionService.save(session)
-      navigator.clipboard.writeText(
+      await navigator.clipboard.writeText(
         `localhost:3000/#/codeblock/${uuid}/${params.codeblockId}?student_login=${user.username}`
+      )
+      await Swal.fire(
+        'Great!',
+        'A link to the user has been copied to clipboard, you are being redirected to the codeblock page',
+        'success'
       )
       navigate(
         `/codeblock/${uuid}/${params.codeblockId}?student_login=${user.username}`

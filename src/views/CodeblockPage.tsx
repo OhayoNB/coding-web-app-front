@@ -6,13 +6,6 @@ import { useParams } from 'react-router-dom'
 import { codeblockService } from 'services/codeblock.service'
 import { Codeblock } from 'models/Codeblock'
 
-const markdown = `
-  \`\`\`javascript
-  const strings = ["10", "10", "10"]; 
-  const numbers = strings.map(parseInt);
-  console.log(numbers);
-`
-
 export const CodeblockPage = () => {
   const [codeblock, setCodeblock] = useState<Codeblock>()
   const params = useParams()
