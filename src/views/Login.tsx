@@ -9,7 +9,7 @@ export const Login = () => {
   const [wrongCredentialsDiv, setWrongCredentialsDiv] = useState<
     String | undefined
   >()
-  const [searchParams, setSearchParams] = useSearchParams()
+  const [searchParams] = useSearchParams()
 
   useEffect(() => {
     setWrongCredentialsDiv('not-visible')

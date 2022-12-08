@@ -12,7 +12,8 @@ export const CodeblockPage = () => {
   const [codeblock, setCodeblock] = useState<Codeblock>()
   const params = useParams()
   const navigate = useNavigate()
-  const [searchParams, setSearchParams] = useSearchParams()
+  const [searchParams] = useSearchParams()
+  const loggedInUser = userService.getLoggedInUser()
 
   useEffect(() => {
     hljs.highlightAll()
@@ -33,7 +34,6 @@ export const CodeblockPage = () => {
   useEffect(() => {
     const studentUsername = searchParams.get('student_login')
     if (studentUsername) {
-      const loggedInUser = userService.getLoggedInUser()
       if (!loggedInUser) {
         Swal.fire(
           'You are not logged in',
@@ -49,7 +49,7 @@ export const CodeblockPage = () => {
         return
       }
     }
-  }, [])
+  }, [navigate, searchParams, loggedInUser])
 
   return (
     <section className="codeblock">
@@ -57,7 +57,7 @@ export const CodeblockPage = () => {
 
       {codeblock && (
         <div
-          contentEditable="true"
+          contentEditable={loggedInUser.isMentor ? 'false' : 'true'}
           dangerouslySetInnerHTML={{
             __html: marked(codeblock.code),
           }}
