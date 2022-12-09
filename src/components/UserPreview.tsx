@@ -22,7 +22,9 @@ export const UserPreview: React.FC<Props> = ({ user }) => {
     try {
       await sessionService.save(session)
       if (process.env.NODE_ENV === 'production')
-        await navigator.clipboard.writeText(`LINK ON DOMAIN`)
+        await navigator.clipboard.writeText(
+          `https://coding-web-app.onrender.com/#/codeblock/${uuid}/${params.codeblockId}?student_login=${user.username}`
+        )
       else
         await navigator.clipboard.writeText(
           `localhost:3000/#/codeblock/${uuid}/${params.codeblockId}?student_login=${user.username}`
