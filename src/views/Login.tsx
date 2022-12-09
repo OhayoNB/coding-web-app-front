@@ -51,10 +51,6 @@ export const Login = () => {
     },
   })
 
-  const handleFocus = (ev: React.FormEvent) => {
-    ev.currentTarget.classList.add('focus')
-  }
-
   return (
     <section className="form-container">
       <form className="signup-form" onSubmit={formik.handleSubmit}>
@@ -67,7 +63,6 @@ export const Login = () => {
           name="username"
           type="text"
           onChange={formik.handleChange}
-          onFocus={handleFocus}
           onBlur={formik.handleBlur}
           value={formik.values.username}
           placeholder="Enter username"
@@ -82,7 +77,6 @@ export const Login = () => {
           name="password"
           type="password"
           onChange={formik.handleChange}
-          onFocus={handleFocus}
           onBlur={formik.handleBlur}
           value={formik.values.password}
           placeholder="Enter password"

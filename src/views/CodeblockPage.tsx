@@ -30,7 +30,11 @@ export const CodeblockPage = () => {
 
   const updateCodeblock = useCallback(async (codeblock: Codeblock) => {
     try {
-      await codeblockService.update(codeblock)
+      const updatedCodeblock = await codeblockService.update(codeblock)
+      if (updatedCodeblock.code === updatedCodeblock.solution) {
+        if (!loggedInUser.isMentor)
+          Swal.fire('Well Done!', 'You made this code to work!', 'success')
+      }
     } catch (err) {
       console.log('update codeblock failed', err)
     }
