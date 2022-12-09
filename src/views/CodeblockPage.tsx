@@ -28,17 +28,20 @@ export const CodeblockPage = () => {
     socketService.on('update-codeblock', socketUpdateCodeblock)
   }, [socketUpdateCodeblock])
 
-  const updateCodeblock = useCallback(async (codeblock: Codeblock) => {
-    try {
-      const updatedCodeblock = await codeblockService.update(codeblock)
-      if (updatedCodeblock.code === updatedCodeblock.solution) {
-        if (!loggedInUser.isMentor)
-          Swal.fire('Well Done!', 'You made this code to work!', 'success')
+  const updateCodeblock = useCallback(
+    async (codeblock: Codeblock) => {
+      try {
+        const updatedCodeblock = await codeblockService.update(codeblock)
+        if (updatedCodeblock.code === updatedCodeblock.solution) {
+          if (!loggedInUser.isMentor)
+            Swal.fire('Well Done!', 'You made this code to work!', 'success')
+        }
+      } catch (err) {
+        console.log('update codeblock failed', err)
       }
-    } catch (err) {
-      console.log('update codeblock failed', err)
-    }
-  }, [])
+    },
+    [loggedInUser]
+  )
 
   useEffect(() => {
     ;(async () => {
