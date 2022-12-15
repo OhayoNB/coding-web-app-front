@@ -7,6 +7,7 @@ import Swal from 'sweetalert2'
 import CodeMirror from '@uiw/react-codemirror'
 import { javascript } from '@codemirror/lang-javascript'
 import { socketService } from 'services/socket.service'
+import _ from 'lodash'
 
 export const CodeblockPage = () => {
   const [codeblock, setCodeblock] = useState<Codeblock>()
@@ -15,24 +16,29 @@ export const CodeblockPage = () => {
   const [searchParams] = useSearchParams()
   const loggedInUser = userService.getLoggedInUser()
 
-  const socketUpdateCodeblock = useCallback((updatedCodeblock: Codeblock) => {
-    setCodeblock(updatedCodeblock)
-  }, [])
-
   useEffect(() => {
     if (params.codeblockId)
       socketService.emit('join-codeblock', params.codeblockId)
   }, [params.codeblockId])
+
+  const socketUpdateCodeblock = useCallback((updatedCodeblock: Codeblock) => {
+    setCodeblock(updatedCodeblock)
+  }, [])
 
   useEffect(() => {
     socketService.on('update-codeblock', socketUpdateCodeblock)
   }, [socketUpdateCodeblock])
 
   const updateCodeblock = useCallback(
-    async (codeblock: Codeblock) => {
+    async (code: string) => {
       try {
-        const updatedCodeblock = await codeblockService.update(codeblock)
-        if (updatedCodeblock.code === updatedCodeblock.solution) {
+        if (!codeblock) return
+        const updatedCodeblock = await codeblockService.update({
+          _id: codeblock._id,
+          code,
+          userId: loggedInUser._id,
+        } as Codeblock)
+        if (updatedCodeblock.code === codeblock.solution) {
           if (!loggedInUser.isMentor)
             Swal.fire('Well Done!', 'You made this code to work!', 'success')
         }
@@ -78,16 +84,11 @@ export const CodeblockPage = () => {
   }, [navigate, searchParams, loggedInUser])
 
   const handleChange = (value: string) => {
-    const updatedCodeBlock: any = { ...codeblock, code: value }
-    setCodeblock(
-      (prevCodeblock) =>
-        ({
-          ...prevCodeblock,
-          code: value,
-        } as Codeblock)
-    )
-    updateCodeblock(updatedCodeBlock)
+    if (loggedInUser.isMentor) return
+    updateCodeblock(value)
   }
+
+  const handleChangeThrottle = _.throttle(handleChange, 1000)
 
   return (
     <section className="codeblock">
@@ -102,7 +103,7 @@ export const CodeblockPage = () => {
           maxWidth="700px"
           theme="dark"
           extensions={[javascript({ jsx: true })]}
-          onChange={handleChange}
+          onChange={handleChangeThrottle}
         />
       )}
     </section>
